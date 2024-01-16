@@ -1,10 +1,9 @@
 <?php
 
-use Giauphan\CrawlBlogData\Models\CategoryBlog;
+use Giauphan\CrawlBlog\Models\CategoryBlog;
 use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
-use Illuminate\Validation\Rules\Unique;
 
 return new class extends Migration
 {
@@ -27,7 +26,7 @@ return new class extends Migration
             $table->integer('show')->default(1);
             $table->string('tags')->nullable();
             $table->float('SimilarityPercentage');
-               $table->foreignIdFor(CategoryBlog::class)->index();
+            $table->foreignIdFor(CategoryBlog::class)->index();
             $table->timestamps();
         });
     }
