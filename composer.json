@@ -12,6 +12,14 @@
             "Giauphan\\CrawlBlog\\": "src/"
         }
     },
+    "extra": {
+        "laravel": {
+            "providers": [
+                "Giauphan\\CrawlBlog\\CrawlBlogDataServiceProvider"
+            ]
+        }
+    },
+
     "require": {
         "php": "^8.1",
         "weidner/goutte": "*",

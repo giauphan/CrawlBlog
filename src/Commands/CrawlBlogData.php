@@ -1,13 +1,12 @@
 <?php
 
-namespace Giauphan\CrawlBlogData\Commands;
+namespace Giauphan\CrawlBlog\Commands;
 
-use Giauphan\CrawlBlogData\Models\CategoryBlog;
-use Giauphan\CrawlBlogData\Models\Post;
+use Giauphan\CrawlBlog\Models\CategoryBlog;
+use Giauphan\CrawlBlog\Models\Post;
 use Illuminate\Console\Command;
 use Weidner\Goutte\GoutteFacade;
 use Illuminate\Support\Str;
-use League\CommonMark\CommonMarkConverter;
 
 class CrawlBlogData extends Command
 {

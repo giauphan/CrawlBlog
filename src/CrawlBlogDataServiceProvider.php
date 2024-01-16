@@ -1,6 +1,6 @@
 <?php
 
-namespace Giauphan\CrawlBlogData;
+namespace Giauphan\CrawlBlog;
 
 use Illuminate\Support\ServiceProvider;
 

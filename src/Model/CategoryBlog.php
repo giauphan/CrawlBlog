@@ -1,6 +1,6 @@
 <?php
 
-namespace Giauphan\CrawlBlogData\Models;
+namespace Giauphan\CrawlBlog\Models;
 
 use Illuminate\Database\Eloquent\Model;
 
