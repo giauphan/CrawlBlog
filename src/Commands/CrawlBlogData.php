@@ -32,7 +32,7 @@ class CrawlBlogData extends Command
                 $this->scrapeData($linkHref, $image, $summary,$categoryId);
             });
             $nextLink = $crawler->filter('nav.pagination li a.next')->first();
-            if ($nextLink->count()  > 0) {
+            if ($nextLink->count()  <= 0) {
                 break;
             }
             $nextPageUrl = $nextLink->attr('href');
