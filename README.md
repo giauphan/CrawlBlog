@@ -20,6 +20,9 @@ Follow these steps to get the Crawler Blog for Laravel up and running:
 
 # Clone the repository:
 
+```
+composer require giauphan/crawl-blog-data
+```
 file to adjust the scraping behavior based on your requirements.
 
 Executing the Crawler: Run the crawler via the command line using the following command:
