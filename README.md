@@ -32,13 +32,13 @@ You need to add provider and alias to your config/app.php file:
 
 You can publish and run the migrations with:
 ```
-php artisan vendor:publish --provider="Giauphan\CrawlBlog\CrawlBlogDataServiceProvider" --tag="giauphan-crawl-blog-migrations"
+php artisan vendor:publish --provider="Giauphan\CrawlBlog\CrawlBlogDataServiceProvider" --tag="migrations"
 php artisan migrate
 ```
 
 You can publish the config file with:
 ```
-php artisan vendor:publish --provider="Giauphan\CrawlBlog\CrawlBlogDataServiceProvider" --tag="giauphan-crawl-blog-command"
+php artisan vendor:publish --provider="Giauphan\CrawlBlog\CrawlBlogDataServiceProvider" --tag="command"
 ```
 
 2. **Configuration:**
