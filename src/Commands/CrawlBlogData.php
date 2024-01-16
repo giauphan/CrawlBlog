@@ -47,24 +47,21 @@ class CrawlBlogData extends Command
         $title = $this->crawlData('.wrap-container h1', $crawler);
         $content = $this->crawlData_html('#main .post', $crawler);
         $check = Post::all();
-        // Convert HTML to Markdown
-        $converter = new CommonMarkConverter();
-        $markdownContent = $converter->convert($content);
        
         if ($check->isEmpty()) {
-            $this->createPost($title, $image, $summary, $markdownContent,$categoryId);
+            $this->createPost($title, $image, $summary, $content,$categoryId);
         } else {
-            $this->checkAndUpdatePost($title, $content, $image, $summary, $markdownContent, $check,$categoryId);
+            $this->checkAndUpdatePost($title,  $image, $summary, $content, $check,$categoryId);
         }
     }
-    protected function createPost($title, $image, $summary, $markdownContent,$categoryId)
+    protected function createPost($title, $image, $summary, $content,$categoryId)
     {
         $cleanedTitle = Str::slug($title, '-');
         $slug = preg_replace('/[^A-Za-z0-9\-]/', '', $cleanedTitle);
         $dataPost = [
             'title' => $title,
             'slug' => $slug,
-            'content' => $markdownContent,
+            'content' => $content,
             'images' => $image,
             'published_at' => now(),
             'summary' => $summary,
@@ -74,7 +71,7 @@ class CrawlBlogData extends Command
         Post::create($dataPost);
     }
 
-    protected function checkAndUpdatePost($title, $content, $image, $summary, $markdownContent, $check,$categoryId)
+    protected function checkAndUpdatePost($title, $image, $summary, $content, $check,$categoryId)
     {
         $checkTile = false;
         $similarityPercentage = 0.0;
@@ -97,7 +94,7 @@ class CrawlBlogData extends Command
             $dataPost = [
                 'title' => $title,
                 'slug' => $slug,
-                'content' =>  $markdownContent,
+                'content' =>  $content,
                 'images' => $image,
                 'published_at' => now(),
                 'summary' => $summary,
@@ -108,17 +105,16 @@ class CrawlBlogData extends Command
         }
     }
 
-    protected function crawlData(string $type, $crawler)
+  protected function crawlData(string $type, $crawler)
     {
-        $result = $crawler->filter($type)->first();
+        $result = $crawler->filter($type)->each(function ($node) {
+            return $node->text();
+        });
 
-        return $result ? $result->text() : '';
-    }
+        if (!empty($result)) {
+            return $result[0];
+        }
 
-    protected function crawlData_html(string $type, $crawler)
-    {
-        $result = $crawler->filter($type)->first();
-
-        return $result ? $result->html() : '';
+        return '';
     }
 }
