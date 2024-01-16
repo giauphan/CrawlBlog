@@ -14,12 +14,11 @@ return new class extends Migration
     {
         Schema::create('posts', function (Blueprint $table) {
             $table->id();
-            $table->string('source');
             $table->string('slug');
             $table->string('lang')->default('en');
             $table->string('title')->unique();
             $table->string('summary')->nullable();
-            $table->string('iamges');
+            $table->string('images');
             $table->string('published_at');
             $table->longText('content');
             $table->integer('view')->default(0);
