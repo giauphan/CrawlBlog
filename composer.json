@@ -1,0 +1,21 @@
+{
+    "name": "giauphan/crawl-blog-data",
+    "description": " This powerful web scraping tool is designed to gather data from blogs and websites with ease, providing you with valuable insights and information.",
+    "type": "library",
+    "license": "MIT",
+    "authors": [{
+        "name": "Giau Phan",
+        "email": "giauphan012@gmail.com"
+    }],
+    "autoload": {
+        "psr-4": {
+            "Giauphan\\CrawlBlog\\": "src/"
+        }
+    },
+    "require": {
+        "php": "^8.1",
+        "weidner/goutte": "^2.3",
+        "guzzlehttp/guzzle": "^7.2",
+        "illuminate/console": "^8.0"
+    }
+}
