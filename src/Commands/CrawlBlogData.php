@@ -44,13 +44,13 @@ class CrawlBlogData extends Command
     {
         $crawler = GoutteFacade::request('GET', $url);
         $title = $this->crawlData('.wrap-container h1', $crawler);
-        $content = $this->crawlData('#main .post', $crawler);
+        $content = $this->crawlData_html('#main .post', $crawler);
         $check = Post::all();
        
         if ($check->isEmpty()) {
             $this->createPost($title, $image, $summary, $content,$categoryId);
         } else {
-            $this->checkAndUpdatePost($title,  $image, $summary, $content, $check,$categoryId);
+            $this->checkAndUpdatePost($title, $image, $summary, $content, $check,$categoryId);
         }
     }
     protected function createPost($title, $image, $summary, $content,$categoryId)
@@ -104,16 +104,17 @@ class CrawlBlogData extends Command
         }
     }
 
-  protected function crawlData(string $type, $crawler)
+    protected function crawlData(string $type, $crawler)
     {
-        $result = $crawler->filter($type)->each(function ($node) {
-            return $node->text();
-        });
+        $result = $crawler->filter($type)->first();
 
-        if (!empty($result)) {
-            return $result[0];
-        }
+        return $result ? $result->text() : '';
+    }
 
-        return '';
+    protected function crawlData_html(string $type, $crawler)
+    {
+        $result = $crawler->filter($type)->first();
+
+        return $result ? $result->html() : '';
     }
 }
