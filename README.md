@@ -19,6 +19,28 @@ Follow these steps to get the Crawler Blog for Laravel up and running:
     composer require giauphan/crawl-blog-data
     ```
 
+You need to add provider and alias to your config/app.php file:
+```
+<?php
+
+'providers' => [     
+
+    Giauphan\CrawlBlog\CrawlBlogDataServiceProvider::class  
+  
+],
+```
+
+You can publish and run the migrations with:
+```
+php artisan vendor:publish --provider="Giauphan\CrawlBlog\CrawlBlogDataServiceProvider" --tag="giauphan-crawl-blog-migrations"
+php artisan migrate
+```
+
+You can publish the config file with:
+```
+php artisan vendor:publish --provider="Giauphan\CrawlBlog\CrawlBlogDataServiceProvider" --tag="giauphan-crawl-blog-command"
+```
+
 2. **Configuration:**
     - Update the `.env` file to configure the database settings.
     - Adjust the `CrawlBlogData.php` file to customize scraping behavior based on your requirements.
