@@ -17,9 +17,9 @@ class CrawlBlogDataServiceProvider extends ServiceProvider
     {
         $this->publishes([
             __DIR__.'/../database/migrations' => database_path('migrations'),
-        ], 'giauphan-crawl-blog-migrations');
+        ], 'migrations');
         $this->publishes([
             __DIR__.'/Commands' => app_path('Console/Commands'),
-        ], 'giauphan-crawl-blog-command');
+        ], 'command');
     }
 }
