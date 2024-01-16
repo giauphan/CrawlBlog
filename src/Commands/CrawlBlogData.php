@@ -44,7 +44,7 @@ class CrawlBlogData extends Command
     {
         $crawler = GoutteFacade::request('GET', $url);
         $title = $this->crawlData('.wrap-container h1', $crawler);
-        $content = $this->crawlData_html('#main .post', $crawler);
+        $content = $this->crawlData('#main .post', $crawler);
         $check = Post::all();
        
         if ($check->isEmpty()) {
