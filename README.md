@@ -5,11 +5,7 @@ Welcome to the Crawler Blog for Laravel repository! This robust web scraping too
 
 ## Features
 - **Web Scraping:** Extract data from various blogs and websites, including blog posts, product descriptions, prices, and customer reviews.
-- **User-Friendly Interface:** The crawler features a simple and intuitive interface suitable for both experts and beginners.
-- **Customizable Search Parameters:** Tailor search criteria to match specific requirements. Filter results by date, location, product category, and more.
-- **Automated Updates:** Stay up-to-date with automated scheduling and regular data updates.
-- **Data Visualization and Export:** Analyze and comprehend extracted data with built-in visualization tools. Export data in formats like CSV, Excel, or JSON for further analysis or integration.
-- **Privacy and Security:** Operates ethically, respecting website terms of service to ensure user privacy and security.
+
 
 ## Installation
 Follow these steps to get the Crawler Blog for Laravel up and running:
