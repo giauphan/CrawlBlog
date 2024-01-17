@@ -45,10 +45,15 @@ php artisan vendor:publish --provider="Giauphan\CrawlBlog\CrawlBlogDataServicePr
     - Update the `.env` file to configure the database settings.
     - Adjust the `CrawlBlogData.php` file to customize scraping behavior based on your requirements.
 
+You can generate a new settings class using this artisan command.
+```
+ php artisan make:crawl-blog CrawlExample
+```
+
 3. **Executing the Crawler:**
     Run the crawler via the command line using the following command:
     ```bash
-    php artisan app:crawl url category_name
+    php artisan app:CrawlExample url category_name
     ```
     This initiates the web scraping process, and the extracted data will be saved to the configured database tables.
 

@@ -10,8 +10,8 @@ use Illuminate\Support\Str;
 
 class DummyClass extends Command
 {
-    protected $signature = 'app:crawl {url} {category_name}';
-    protected $description = 'Crawl blog data from a given URL';
+    protected $signature = 'app:DummyClass {url} {category_name}';
+    protected $description = 'DummyClass blog data from a given URL';
 
     public function handle()
     {
