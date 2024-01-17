@@ -23,6 +23,9 @@
     "require": {
         "php": "^8.1",
         "weidner/goutte": "*",
-        "guzzlehttp/guzzle": "^7.2"
+        "guzzlehttp/guzzle": "^7.2",
+        "illuminate/console": "^10.41",
+        "illuminate/database": "^10.38",
+        "symfony/browser-kit": "^6.4"
     }
 }
