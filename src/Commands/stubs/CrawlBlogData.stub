@@ -1,6 +1,6 @@
 <?php
 
-namespace App\CrawlBlog;
+namespace DummyNamespace;
 
 use Giauphan\CrawlBlog\Models\CategoryBlog;
 use Giauphan\CrawlBlog\Models\Post;
@@ -8,7 +8,7 @@ use Illuminate\Console\Command;
 use Weidner\Goutte\GoutteFacade;
 use Illuminate\Support\Str;
 
-class CrawlBlogData extends Command
+class DummyClass extends Command
 {
     protected $signature = 'app:crawl {url} {category_name}';
     protected $description = 'Crawl blog data from a given URL';
