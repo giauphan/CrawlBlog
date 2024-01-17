@@ -25,6 +25,16 @@ You need to add provider and alias to your config/app.php file:
   
 ],
 ```
+You need to add commands  to your app/Console/Kernel.php file:
+```
+ protected function commands(): void
+    {
+        $this->load(__DIR__.'/Commands');
+        $this->load(__DIR__.'/../CrawlBlog');
+
+        require base_path('routes/console.php');
+    }
+```
 
 You can publish and run the migrations with:
 ```
