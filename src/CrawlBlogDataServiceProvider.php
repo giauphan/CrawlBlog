@@ -10,6 +10,7 @@ class CrawlBlogDataServiceProvider extends ServiceProvider
     {
         $this->commands([
             Commands\CrawlBlogData::class,
+            Commands\MakeCrawlBlogCommand::class,
         ]);
     }
 
