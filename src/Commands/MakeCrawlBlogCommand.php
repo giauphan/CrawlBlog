@@ -45,7 +45,7 @@ class MakeCrawlBlogCommand extends GeneratorCommand
      */
     protected function getStub()
     {
-        return $this->resolveStubPath('/stubs/CrawlBlogData.stub');
+        return __DIR__ . '/stubs/CrawlBlogData.stub';
     }
 
     /**
