@@ -19,7 +19,6 @@ class CrawlBlogData extends Command
         $pageUrl = $this->argument('url');
         $categoryName = $this->argument('category_name');
 
-        // Check if the category exists, or create it
         $category = CategoryBlog::firstOrCreate(['name' => $categoryName], ['slug' => Str::slug($categoryName)]);
         $categoryId = $category->id;
         do {

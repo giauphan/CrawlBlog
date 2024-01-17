@@ -3,7 +3,6 @@
 namespace Giauphan\CrawlBlog\Commands;
 
 use Illuminate\Console\GeneratorCommand;
-use Illuminate\Support\Str;
 
 class MakeCrawlBlogCommand extends GeneratorCommand
 {
@@ -48,17 +47,10 @@ class MakeCrawlBlogCommand extends GeneratorCommand
         return __DIR__ . '/stubs/CrawlBlogData.stub';
     }
 
-    /**
-     * Get the default namespace for the class.
-     *
-     * @param  string  $rootNamespace
-     * @return string
-     */
     protected function getDefaultNamespace($rootNamespace)
     {
-        return "{$rootNamespace}\Console\Commands";
+        return "{$rootNamespace}\CrawlBlog";
     }
-
     /**
      * Execute the console command.
      *
@@ -70,32 +62,10 @@ class MakeCrawlBlogCommand extends GeneratorCommand
         $this->info('Crawl blog class created successfully.');
     }
 
-    /**
-     * Get the path to the class file.
-     *
-     * @param  string  $name
-     * @return string
-     */
-    protected function getPath($name)
+    protected function resolveStubPath(string $stub): string
     {
-        return $this->laravel['path'] . '/Console/Commands/' . str_replace('\\', '/', $name) . '.php';
-    }
-
-    /**
-     * Replace the namespace for the given stub.
-     *
-     * @param  string  $stub
-     * @param  string  $name
-     * @return $this
-     */
-    protected function replaceNamespace(&$stub, $name)
-    {
-        $stub = str_replace(
-            ['DummyNamespace', 'DummyRootNamespace', 'NamespacedDummyUserModel'],
-            [$this->getNamespace($name), $this->rootNamespace(), $this->userProviderModel()],
-            $stub
-        );
-
-        return $this;
+        return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
+            ? $customPath
+            : __DIR__ . $stub;
     }
 }
