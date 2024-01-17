@@ -1,6 +1,6 @@
 <?php
 
-namespace Giauphan\CrawlBlog\Commands;
+namespace App\CrawlBlog;
 
 use Giauphan\CrawlBlog\Models\CategoryBlog;
 use Giauphan\CrawlBlog\Models\Post;
