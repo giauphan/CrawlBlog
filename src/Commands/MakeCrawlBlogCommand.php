@@ -1,11 +1,11 @@
 <?php
 
-namespace Giauphan\CrawlBlog\Console;
+namespace Giauphan\CrawlBlog\Commands;
 
 use Illuminate\Console\Command;
 use Illuminate\Support\Str;
 
-class MakeSettingCommand extends Command
+class MakeCrawlBlogCommand extends Command
 {
     protected $name = 'make:crawl-blog';
 

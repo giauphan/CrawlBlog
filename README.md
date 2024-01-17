@@ -16,7 +16,7 @@ Follow these steps to get the Crawler Blog for Laravel up and running:
 
 1. **Clone the repository:**
     ```bash
-    composer require giauphan/crawl-blog-data
+    composer require giauphan/crawl-blog-data -W
     ```
 
 You need to add provider and alias to your config/app.php file:
