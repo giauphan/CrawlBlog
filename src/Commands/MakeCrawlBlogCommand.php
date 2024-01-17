@@ -2,75 +2,100 @@
 
 namespace Giauphan\CrawlBlog\Commands;
 
-use Illuminate\Console\Command;
+use Illuminate\Console\GeneratorCommand;
 use Illuminate\Support\Str;
 
-class MakeCrawlBlogCommand extends Command
+class MakeCrawlBlogCommand extends GeneratorCommand
 {
-    protected $name = 'make:crawl-blog';
-
-    protected $description = 'Create a new crawl blog class';
-
-    protected $type = 'crawl-blog';
-
-    protected $files;
     /**
-     * The signature of the console command.
+     * The name and signature of the console command.
      *
      * @var string
      */
     protected $signature = 'make:crawl-blog {name : The name of the crawl blog class}';
 
-    protected function getStub(): string
+    /**
+     * The console command description.
+     *
+     * @var string
+     */
+    protected $description = 'Create a new crawl blog class';
+
+    /**
+     * The type of class being generated.
+     *
+     * @var string
+     */
+    protected $type = 'CrawlBlogData';
+
+    /**
+     * Get the root namespace for the class.
+     *
+     * @return string
+     */
+    protected function rootNamespace()
+    {
+        return $this->laravel->getNamespace();
+    }
+
+    /**
+     * Get the stub file for the generator.
+     *
+     * @return string
+     */
+    protected function getStub()
     {
         return $this->resolveStubPath('/stubs/CrawlBlogData.stub');
     }
 
-    protected function resolveStubPath(string $stub): string
-    {
-        return file_exists($customPath = $this->laravel->basePath(trim($stub, '/')))
-            ? $customPath
-            : __DIR__ . $stub;
-    }
-
-    protected function getDefaultNamespace($rootNamespace): string
+    /**
+     * Get the default namespace for the class.
+     *
+     * @param  string  $rootNamespace
+     * @return string
+     */
+    protected function getDefaultNamespace($rootNamespace)
     {
         return "{$rootNamespace}\Console\Commands";
     }
 
+    /**
+     * Execute the console command.
+     *
+     * @return void
+     */
     public function handle()
     {
-        $name = Str::studly($this->argument('name'));
-
-        $path = $this->getPath($name);
-
-        // Check if the class already exists
-        if ($this->alreadyExists($this->getNameInput())) {
-            $this->error($this->type . ' already exists!');
-
-            return false;
-        }
-
-        // Create the crawl blog class
-        $this->makeDirectory($path);
-        $this->files->put($path, $this->buildClass($name));
-
-        $this->info($this->type . ' created successfully.');
-        $this->line("<info>Created Crawl Blog Class:</info> $name");
+        parent::handle();
+        $this->info('Crawl blog class created successfully.');
     }
 
-    protected function getPath($name): string
+    /**
+     * Get the path to the class file.
+     *
+     * @param  string  $name
+     * @return string
+     */
+    protected function getPath($name)
     {
-        $name = Str::replaceFirst($this->rootNamespace(), '', $name);
-
-        return $this->laravel['path'] . '/' . str_replace('\\', '/', $name) . '.php';
+        return $this->laravel['path'] . '/Console/Commands/' . str_replace('\\', '/', $name) . '.php';
     }
 
-    protected function buildClass($name): string
+    /**
+     * Replace the namespace for the given stub.
+     *
+     * @param  string  $stub
+     * @param  string  $name
+     * @return $this
+     */
+    protected function replaceNamespace(&$stub, $name)
     {
-        $stub = $this->files->get($this->getStub());
+        $stub = str_replace(
+            ['DummyNamespace', 'DummyRootNamespace', 'NamespacedDummyUserModel'],
+            [$this->getNamespace($name), $this->rootNamespace(), $this->userProviderModel()],
+            $stub
+        );
 
-        return $this->replaceNamespace($stub, $name)
-            ->replaceClass($stub, $name);
+        return $this;
     }
 }
