@@ -8,29 +8,56 @@ use Illuminate\Console\Command;
 use Weidner\Goutte\GoutteFacade;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlBlogData extends Command
 {
-    protected $signature = 'app:crawl {url} {category_name}';
+    protected $signature = 'crawl:CrawlBlogData {url} {category_name} {lang} {limitblog}';
     protected $description = 'Crawl blog data from a given URL';
 
     public function handle()
     {
         $pageUrl = $this->argument('url');
         $categoryName = $this->argument('category_name');
+        $lang = $this->argument('lang');
+        $limit = $this->argument('limitblog');
+    
+        $category = CategoryBlog::firstOrCreate(['name' => $categoryName], ['slug' => Str::slug($categoryName)]);
+        $categoryId = $category->id;
+    
+        $totaltimes = 0;
 
         $category = CategoryBlog::firstOrCreate(['name' => $categoryName], ['slug' => Str::slug($categoryName)]);
         $categoryId = $category->id;
         do {
             $crawler = GoutteFacade::request('GET', $pageUrl);
 
-            $crawler->filter('.blog-post-masonry')->each(function ($node) use ($categoryId) {
-                $summary = $node->filter('.content h3')->text();
-                $image = optional($node->filter('.blog-post-masonry header img')->first())->attr('data-lazy-src');
-                $linkHref = $node->filter('.blog-post-masonry header a')->attr('href');
+            $crawl_arr = $crawler->filter('.classnameBLog');
+            if ($crawl_arr->count() === 0) {
+                $this->error('No matching elements found on the page. Check if the HTML structure has changed.');
+                break;
+            }
 
-                $this->scrapeData($linkHref, $image, $summary, $categoryId);
-            });
+            foreach ($crawl_arr as $node) {
+                
+                if ($node instanceof \DOMElement) {
+                    $node = new Crawler($node);
+                }
+
+                $title = $node->filter('.Title')->text();
+                $summary = $node->filter('.summary')->text();
+                $image = optional($node->filter('.ImagesBlog')->first())->attr('data-lazy-src');
+                $linkHref = $node->filter('.LinkBlog')->attr('href');
+                $this->scrapeData($linkHref, $title, $image, $summary, $categoryId, $lang);
+
+                $totaltimes++;
+    
+                if ($totaltimes >= $limit) {
+                    $this->info('Reached the limit.');
+                    break 2; 
+                }
+            };
+            
             $nextLink = $crawler->filter('nav.pagination li a.next')->first();
             if ($nextLink->count()  <= 0) {
                 break;
@@ -40,20 +67,20 @@ class CrawlBlogData extends Command
         } while ($pageUrl !== '');
     }
 
-    public function scrapeData($url, $image, $summary, $categoryId)
+    public function scrapeData($url, $title, $image, $summary, $categoryId, $lang)
     {
         $crawler = GoutteFacade::request('GET', $url);
-        $title = $this->crawlData('.wrap-container h1', $crawler);
         $content = $this->crawlData_html('#main .post', $crawler);
         $check = Post::all();
 
         if ($check->isEmpty()) {
-            $this->createPost($title, $image, $summary, $content, $categoryId);
+            $this->createPost($title, $image, $summary, $content, $categoryId, $lang);
         } else {
-            $this->checkAndUpdatePost($title, $image, $summary, $content, $check, $categoryId);
+            $this->checkAndUpdatePost($title, $image, $summary, $content, $check, $categoryId, $lang);
         }
     }
-    protected function createPost($title, $image, $summary, $content, $categoryId)
+
+    protected function createPost($title, $image, $summary, $content, $categoryId, $lang)
     {
         $cleanedTitle = Str::slug($title, '-');
         $slug = preg_replace('/[^A-Za-z0-9\-]/', '', $cleanedTitle);
@@ -62,7 +89,8 @@ class CrawlBlogData extends Command
             'slug' => $slug,
             'content' => $content,
             'images' => $image,
-            'published_at' => Carbon::now(),
+            'lang' => $lang,
+            'published_at' => Carbon::now(),,
             'summary' => $summary,
             'category_blog_id' => $categoryId,
             'SimilarityPercentage' => 0.0,
@@ -70,7 +98,7 @@ class CrawlBlogData extends Command
         Post::create($dataPost);
     }
 
-    protected function checkAndUpdatePost($title, $image, $summary, $content, $check, $categoryId)
+    protected function checkAndUpdatePost($title, $image, $summary, $content, $check, $categoryId, $lang)
     {
         $checkTile = false;
         $similarityPercentage = 0.0;
@@ -93,9 +121,10 @@ class CrawlBlogData extends Command
             $dataPost = [
                 'title' => $title,
                 'slug' => $slug,
-                'content' =>  $content,
+                'content' => $content,
                 'images' => $image,
-                'published_at' => Carbon::now(),
+                'lang' => $lang,
+                'published_at' => Carbon::now(),,
                 'summary' => $summary,
                 'category_blog_id' => $categoryId,
                 'SimilarityPercentage' => round($similarityPercentage, 2),
@@ -113,8 +142,12 @@ class CrawlBlogData extends Command
 
     protected function crawlData_html(string $type, $crawler)
     {
-        $result = $crawler->filter($type)->first();
+        $nodeList = $crawler->filter($type);
+        if ($nodeList->count() === 0) {
+            return '';
+        }
 
+        $result = $nodeList->first();
         return $result ? $result->html() : '';
     }
 }

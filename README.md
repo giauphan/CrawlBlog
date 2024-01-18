@@ -59,7 +59,7 @@ You can generate a new settings class using this artisan command.
 3. **Executing the Crawler:**
     Run the crawler via the command line using the following command:
     ```bash
-    php artisan app:CrawlExample url category_name
+    php artisan crawl:CrawlExample url category_name lang limitblog
     ```
     This initiates the web scraping process, and the extracted data will be saved to the configured database tables.
 
