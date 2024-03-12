@@ -16,7 +16,7 @@ Follow these steps to get the Crawler Blog for Laravel up and running:
     ```
 
 You need to add provider and alias to your config/app.php file:
-```
+```php
 <?php
 
 'providers' => [     
@@ -26,7 +26,7 @@ You need to add provider and alias to your config/app.php file:
 ],
 ```
 You need to add commands  to your app/Console/Kernel.php file:
-```
+```php
  protected function commands(): void
     {
         $this->load(__DIR__.'/Commands');
@@ -52,7 +52,7 @@ php artisan vendor:publish --provider="Giauphan\CrawlBlog\CrawlBlogDataServicePr
     - Adjust the `CrawlBlogData.php` file to customize scraping behavior based on your requirements.
 
 You can generate a new settings class using this artisan command.
-```
+```bash
  php artisan make:crawl-blog CrawlExample
 ```
 
