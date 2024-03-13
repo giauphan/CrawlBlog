@@ -25,7 +25,7 @@
         "weidner/goutte": "*",
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/console": "*",
-        "illuminate/database": "^10.38",
+        "illuminate/database": "*",
         "symfony/browser-kit": "^6.4"
     }
 }
