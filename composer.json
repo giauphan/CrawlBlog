@@ -22,7 +22,7 @@
 
     "require": {
         "php": "^8.1",
-        "weidner/goutte": "*",
+        "giauphan/goutte": "*",
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/console": "*",
         "illuminate/database": "*",
