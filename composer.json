@@ -22,10 +22,10 @@
 
     "require": {
         "php": "^8.1",
-        "giauphan/goutte": "^1.1",
+        "giauphan/goutte": "*",
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/console": "*",
         "illuminate/database": "*",
-        "giauphan/goutte-facade": "^1.0"
+        "giauphan/goutte-facade": "*"
     }
 }
