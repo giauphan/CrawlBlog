@@ -38,7 +38,7 @@ You need to add commands  to your app/Console/Kernel.php file:
 # Laravel 11.x
 You need to add commands  to your bootstrap/app.php file:
 ```php
- use App\CrawlBlog\Commands\CrawlExample;
+ use App\CrawlBlog\CrawlExample;
 
 ->withCommands([
         CrawlExample::class,
