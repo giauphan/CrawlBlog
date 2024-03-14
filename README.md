@@ -14,7 +14,7 @@ Follow these steps to get the Crawler Blog for Laravel up and running:
     ```bash
     composer require giauphan/crawl-blog-data -W
     ```
-
+# Laravel 10.x
 You need to add provider and alias to your config/app.php file:
 ```php
 <?php
@@ -25,7 +25,6 @@ You need to add provider and alias to your config/app.php file:
   
 ],
 ```
-# Laravel 10.x
 You need to add commands  to your app/Console/Kernel.php file:
 ```php
  protected function commands(): void
@@ -38,7 +37,7 @@ You need to add commands  to your app/Console/Kernel.php file:
 ```
 # Laravel 11.x
 You need to add commands  to your bootstrap/app.php file:
-```
+```php
  use App\CrawlBlog\Commands\CrawlExample;
 
 ->withCommands([
