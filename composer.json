@@ -25,6 +25,7 @@
         "giauphan/goutte": "^1.1",
         "guzzlehttp/guzzle": "^7.2",
         "illuminate/console": "*",
-        "illuminate/database": "*"
+        "illuminate/database": "*",
+        "giauphan/goutte-facade": "^1.0"
     }
 }

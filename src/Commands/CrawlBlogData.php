@@ -5,9 +5,9 @@ namespace Giauphan\CrawlBlog\Commands;
 use Giauphan\CrawlBlog\Models\CategoryBlog;
 use Giauphan\CrawlBlog\Models\Post;
 use Illuminate\Console\Command;
-use Giauphan\Client;
 use Illuminate\Support\Str;
 use Carbon\Carbon;
+use Giauphan\Goutte\GoutteFacade;
 use Symfony\Component\DomCrawler\Crawler;
 
 class CrawlBlogData extends Command
@@ -30,8 +30,7 @@ class CrawlBlogData extends Command
         $category = CategoryBlog::firstOrCreate(['name' => $categoryName], ['slug' => Str::slug($categoryName)]);
         $categoryId = $category->id;
         do {
-            $client = new Client();
-            $crawler = $client->request('GET', $pageUrl);
+            $crawler = GoutteFacade::request('GET', $pageUrl);
 
             $crawl_arr = $crawler->filter('.classnameBLog');
             if ($crawl_arr->count() === 0) {
@@ -70,8 +69,7 @@ class CrawlBlogData extends Command
 
     public function scrapeData($url, $title, $image, $summary, $categoryId, $lang)
     {
-        $client = new Client();
-        $crawler =$client->request('GET', $url);
+        $crawler = GoutteFacade::request('GET', $url);
         $content = $this->crawlData_html('#main .post', $crawler);
         $check = Post::all();
 
