@@ -25,6 +25,7 @@ You need to add provider and alias to your config/app.php file:
   
 ],
 ```
+# Laravel 10.x
 You need to add commands  to your app/Console/Kernel.php file:
 ```php
  protected function commands(): void
@@ -34,6 +35,14 @@ You need to add commands  to your app/Console/Kernel.php file:
 
         require base_path('routes/console.php');
     }
+```
+# Laravel 11.x
+```
+ use App\CrawlBlog\Commands\CrawlExample;
+
+->withCommands([
+        CrawlExample::class,
+])
 ```
 
 You can publish and run the migrations with:
